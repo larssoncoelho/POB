@@ -1,0 +1,138 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="POB.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="opbNome" Type="System.String" Scope="User">
+      <Value Profile="(Default)">opbNome</Value>
+    </Setting>
+    <Setting Name="opbNomeIFCPilar" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name</Value>
+    </Setting>
+    <Setting Name="obpNomeIFCViga" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name</Value>
+    </Setting>
+    <Setting Name="opbNomeIFCLaje" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name</Value>
+    </Setting>
+    <Setting Name="nomePainelFerramentaModelagem" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Contrutivel</Value>
+    </Setting>
+    <Setting Name="nomeAbaEstrutura" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Estrutura</Value>
+    </Setting>
+    <Setting Name="L7InsumoVinculado" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Descrição do Insumo</Value>
+    </Setting>
+    <Setting Name="Mark" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Marca</Value>
+    </Setting>
+    <Setting Name="Volume" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Volume</Value>
+    </Setting>
+    <Setting Name="Comments" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Comentários</Value>
+    </Setting>
+    <Setting Name="Area" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Área</Value>
+    </Setting>
+    <Setting Name="Thickness" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Espessura</Value>
+    </Setting>
+    <Setting Name="Diameter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Diâmetro</Value>
+    </Setting>
+    <Setting Name="systemType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tipo de sistema</Value>
+    </Setting>
+    <Setting Name="Elevation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Elevação</Value>
+    </Setting>
+    <Setting Name="structuralColumns" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Pilares estruturais</Value>
+    </Setting>
+    <Setting Name="L7Unidade" Type="System.String" Scope="User">
+      <Value Profile="(Default)">L7Unidade</Value>
+    </Setting>
+    <Setting Name="L7Comprimento" Type="System.String" Scope="User">
+      <Value Profile="(Default)">L7Comprimento</Value>
+    </Setting>
+    <Setting Name="Material" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Material</Value>
+    </Setting>
+    <Setting Name="walls" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Paredes</Value>
+    </Setting>
+    <Setting Name="parts" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Peças</Value>
+    </Setting>
+    <Setting Name="Columns" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Colunas</Value>
+    </Setting>
+    <Setting Name="structuralFraming" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Quadro estrutural</Value>
+    </Setting>
+    <Setting Name="structuralTrusses" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Treliças estruturais</Value>
+    </Setting>
+    <Setting Name="telhados" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Telhados</Value>
+    </Setting>
+    <Setting Name="floors" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Pisos</Value>
+    </Setting>
+    <Setting Name="forros" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Forros</Value>
+    </Setting>
+    <Setting Name="furniture" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mobiliário</Value>
+    </Setting>
+    <Setting Name="genericModels" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Modelos genéricos</Value>
+    </Setting>
+    <Setting Name="GuardaCorpos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Guarda-corpos</Value>
+    </Setting>
+    <Setting Name="Janelas" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Janelas</Value>
+    </Setting>
+    <Setting Name="flexPipes" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tubulação flexível</Value>
+    </Setting>
+    <Setting Name="escadas" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Escadas</Value>
+    </Setting>
+    <Setting Name="equipamentoEspecial" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Equipamento especial</Value>
+    </Setting>
+    <Setting Name="electricalFixtures" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Equipamento elétrico</Value>
+    </Setting>
+    <Setting Name="pipes" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tubulação</Value>
+    </Setting>
+    <Setting Name="pipeFittings" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Conexões de tubo</Value>
+    </Setting>
+    <Setting Name="pipeAccessories" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Acessórios do tubo</Value>
+    </Setting>
+    <Setting Name="plumbingFixtures" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Equipamentos hidráulicos</Value>
+    </Setting>
+    <Setting Name="Sprinklers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sprinklers</Value>
+    </Setting>
+    <Setting Name="mechanicalEquipament" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Equipamento mecânico</Value>
+    </Setting>
+    <Setting Name="GrossWeigth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GrossWeigth</Value>
+    </Setting>
+    <Setting Name="tocChapa" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Chapa</Value>
+    </Setting>
+    <Setting Name="tocDensidadeChapa" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Densidade de área</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
