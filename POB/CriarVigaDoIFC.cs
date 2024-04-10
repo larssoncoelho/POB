@@ -79,6 +79,8 @@ namespace POB
                             Curve curva = GetLinhaDaViga(faceDoSolido, uiDoc);
 
                             FamilyInstance fi = uiDoc.Create.NewFamilyInstance(curva, fs, pavimento, Autodesk.Revit.DB.Structure.StructuralType.Beam);
+
+                          
                             try 
                             { 
                                 fi.LookupParameter(POB.Properties.Settings.Default.opbNome).Set((uiDoc.GetElement(eleId) as FamilyInstance).Name);

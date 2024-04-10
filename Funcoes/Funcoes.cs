@@ -1466,10 +1466,7 @@ namespace Funcoes
           Type targetType,
           string targetName)
         {
-            return new FilteredElementCollector(uiDoc)
-              .OfClass(targetType)
-              .FirstOrDefault<Element>(
-                e => e.Name.Equals(targetName));
+            return new FilteredElementCollector(uiDoc).OfClass(targetType).FirstOrDefault<Element>(e => e.Name.Equals(targetName));
         }
         #endregion // Retrieve an element by class and name
 

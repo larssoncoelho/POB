@@ -17,6 +17,7 @@ using System.Xml;
 
 using System.Reflection;
 using System.Collections;
+using System.Windows.Controls;
 
 namespace POB.NegocioRevit
 {
@@ -110,7 +111,7 @@ namespace POB.NegocioRevit
 #if D24
             //m_slabShapeEditor.ModifySubElement(vertexInicial, menorDitancia * inclinacao);
 #else
-            m_slabShapeEditor.ModifySubElement(vertexInicial, menorDitancia * inclinacao);
+           // m_slabShapeEditor.ModifySubElement(vertexInicial, menorDitancia * inclinacao);
 #endif
 
             if (criarTransacao) transaction.Commit();
@@ -126,6 +127,27 @@ namespace POB.NegocioRevit
 
             Opening opening = floor.Document.Create.NewOpening(floor, percuso ,true);
             if (criarTransacao) transaction.Commit();
+            transaction.Start("nova parte");
+            try
+            {
+              
+                var v = new FilteredElementCollector(floor.Document).OfClass(typeof(FamilySymbol)).FirstOrDefault<Element>(e3 => e3.Name.Equals("IMPER - Blocos - Ralo"));
+                //var v = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).ToList();
+              //  TaskDialog.Show("_", v.Name);
+
+                FamilySymbol fs2 = v as FamilySymbol;
+               FamilyInstance fi2 = floor.Document.Create.NewFamilyInstance(pontoSelecionado, fs2, commandData.Application.ActiveUIDocument.ActiveView);
+
+
+            }
+            catch
+            {
+
+            }
+            
+
+            transaction.Commit();
+
             return resultadoExternalCommandData;
         }
     }

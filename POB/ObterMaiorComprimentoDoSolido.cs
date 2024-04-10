@@ -19,7 +19,7 @@ using Autodesk.Revit.ApplicationServices;
 using System.Runtime.InteropServices.ComTypes;
 using wf = System.Windows.Forms;
 
-using LinqToExcel;
+//using LinqToExcel;
 
 namespace POB
 {
@@ -41,6 +41,16 @@ namespace POB
             Selection sel = uiApp.ActiveUIDocument.Selection;
             //TransactionGroup t = new TransactionGroup(uiDoc);
 
+            ViewSchedule _viewSchedule = uiDoc.ActiveView as ViewSchedule;
+            
+            TableSectionData sectionData = _viewSchedule.GetTableData().GetSectionData(Autodesk.Revit.DB.SectionType.Body);
+
+            var numberOfRows = sectionData.NumberOfRows;
+            var numberOfColumns = sectionData.NumberOfColumns;
+            var firstRowNumber = sectionData.FirstRowNumber;
+
+            return Result.Succeeded;
+
 
 
             List<ObjetoDeTranferencia.DadosExcel> dadosExcel = new List<ObjetoDeTranferencia.DadosExcel>();
@@ -54,16 +64,16 @@ namespace POB
                 string caminhoArquivo = openFileDialog.FileName;
 
 
-                var excel = new ExcelQueryFactory(caminhoArquivo) { ReadOnly = true };
+                //var excel = new ExcelQueryFactory(caminhoArquivo) { ReadOnly = true };
 
                 // Obter todas as linhas da planilha
-                dadosExcel = (from linha in excel.Worksheet("depara")
+              /*  dadosExcel = (from linha in excel.Worksheet("depara")
                               select new ObjetoDeTranferencia.DadosExcel
                               {
                                   NomeModelo = linha["Vínculo RVT: Nome do arquivo"].ToString(),
                                   Id = linha["Código parede"].ToString(),
                                   CodComposicao = linha["CodComposicao"].ToString()
-                              }).ToList();
+                              }).ToList();*/
                 //escolher o arquivo
                 //ler arquivo
                 //
