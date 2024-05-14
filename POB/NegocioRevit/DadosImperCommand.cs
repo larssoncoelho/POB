@@ -88,17 +88,20 @@ return vetor[1];
                                 }
                         if((tocDesconsiderarElemento==null)||(!tocDesconsiderarElemento.HasValue))
                         {
-                            ele1.LookupParameter("tocCodigoImper").Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
-                            listaElemento.Add(new ElementoResumido
-                            {
-                                Tipo = "Parede",
-                                TocAlturaRodape = (ele1 as Wall).LookupParameter("Altura desconectada").AsDouble(),
-                                TocAreaRodape = (ele1 as Wall).LookupParameter("Área").AsDouble(),
-                                TocEspessuraMaxima = 0,
-                                TocPerimetro = (ele1 as Wall).LookupParameter("Comprimento").AsDouble(),
-                                TocVolume = (ele1 as Wall).LookupParameter("Volume").AsDouble(),
-                                TocLarguraParede = (ele1 as Wall).WallType.get_Parameter(BuiltInParameter.WALL_ATTR_WIDTH_PARAM).AsDouble()
-                            });
+                            var p1 = ele1.LookupParameter("tocCodigoImper");
+                            if (!p1.IsReadOnly) { 
+                                p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                                listaElemento.Add(new ElementoResumido
+                                {
+                                    Tipo = "Parede",
+                                    TocAlturaRodape = (ele1 as Wall).LookupParameter("Altura desconectada").AsDouble(),
+                                    TocAreaRodape = (ele1 as Wall).LookupParameter("Área").AsDouble(),
+                                    TocEspessuraMaxima = 0,
+                                    TocPerimetro = (ele1 as Wall).LookupParameter("Comprimento").AsDouble(),
+                                    TocVolume = (ele1 as Wall).LookupParameter("Volume").AsDouble(),
+                                    TocLarguraParede = (ele1 as Wall).WallType.get_Parameter(BuiltInParameter.WALL_ATTR_WIDTH_PARAM).AsDouble()
+                                });
+                            }
                         }
                     }
                   /*  if (!(ele1 is Autodesk.Revit.DB.FamilyInstance) & ((ele1 as Wall).IsStackedWall))
