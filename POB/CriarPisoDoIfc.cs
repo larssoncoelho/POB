@@ -229,6 +229,8 @@ namespace POB
             novoTipo.LookupParameter("Marca de tipo").Set("1");
             return novoTipo;
         }
+
+       
         public void GeraListaLaje(FilteredElementCollector filtro)
         {
             listaDeLaje.Clear();

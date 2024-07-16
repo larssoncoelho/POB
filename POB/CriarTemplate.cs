@@ -23,6 +23,8 @@ using System.IO.Packaging;
 using ex =Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
 using System.Windows.Media.Media3D;
+using System.Windows.Controls.Primitives;
+using LinqToExcel;
 
 
 namespace POB
@@ -43,6 +45,10 @@ namespace POB
                 List<DadosExcel> materiais = new List<DadosExcel>();
                 List<DadosExcel> parametros = new List<DadosExcel>();
                 List<DadosExcel> dados = new List<DadosExcel>();
+                List<Tipo> tipos = new List<Tipo>();
+
+
+                List<Camada> camadas = new List<Camada>();
                 CategorySet categorySet = new CategorySet();
 
                 categorySet.Insert(Category.GetCategory(uiDoc, BuiltInCategory.OST_Materials));
@@ -54,9 +60,15 @@ namespace POB
                 ex.Worksheet dadosExcel = workbook.Sheets["dados"];
                 ex.Worksheet materiaisExcel = workbook.Sheets["material"];
                 ex.Worksheet worksheet = workbook.Sheets["parametros"];
+                ex.Worksheet tiposExcel = workbook.Sheets["tipos"];
+                ex.Worksheet camadasExcel = workbook.Sheets["camadas"];
+
+
                 ex.Range rangeDados = dadosExcel.UsedRange;
                 ex.Range rangeMateriais= materiaisExcel.UsedRange;
                 ex.Range rangeParametros = worksheet.UsedRange;
+                ex.Range rangeTipos = tiposExcel.UsedRange;
+                ex.Range rangeCamadas = camadasExcel.UsedRange;
                 excelApp.Visible = true;
 
                 for (int row = 2; row <= rangeParametros.Rows.Count; row++) // Assuming first row is header
@@ -97,6 +109,36 @@ namespace POB
                     dados.Add(dado);
                 }
 
+                for (int row = 2; row <= rangeTipos.Rows.Count; row++) // Assuming first row is header
+                {
+                    Tipo dado = new Tipo
+                    {
+                        id = Convert.ToInt32( (rangeTipos.Cells[row, 1] as Range).Text),
+                        Categoria = (rangeTipos.Cells[row, 2] as Range).Text,
+                        Familia= (rangeTipos.Cells[row, 3] as Range).Text,
+
+                        DescricaoTipo = (rangeTipos.Cells[row, 4] as Range).Text,
+                        ComentariosDeTipo = (rangeTipos.Cells[row, 5] as Range).Text,
+                     
+
+                    };
+                    tipos.Add(dado);
+                }
+
+                for (int row = 2; row <= rangeCamadas.Rows.Count; row++) // Assuming first row is header
+                {
+                    Camada camada = new Camada
+                    {
+                        idFamila = Convert.ToInt32( (rangeCamadas.Cells[row, 1] as Range).Text),
+                        Familia = (rangeCamadas.Cells[row, 2] as Range).Text,
+                        DescricaoTipo = (rangeCamadas.Cells[row, 3] as Range).Text,
+                        Material = (rangeCamadas.Cells[row, 4] as Range).Text,
+                        Espessura = Convert.ToDouble( (rangeCamadas.Cells[row, 5] as Range).Text),
+                        TipoDeCamada = (rangeCamadas.Cells[row, 6] as Range).Text,
+                        Variavel = Convert.ToInt32((rangeCamadas.Cells[row, 7] as Range).Text),
+                    };
+                    camadas.Add(camada);
+                }
 
                 workbook.Close(false);
                 excelApp.Quit();
@@ -106,40 +148,27 @@ namespace POB
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
 
-                /*
-                var excel = new ExcelQueryFactory(caminho) { ReadOnly = true };
+               
+               /* var excel = new ExcelQueryFactory(caminho) { ReadOnly = true };
                 try
                 {
-                    parametros = (from linha in excel.Worksheet("parametros")
-                                  select new DadosExcel
+                    camadas = (from linha in excel.Worksheet("camadas")
+                                  select new Camada
                                   {
-                                      Lingua = linha["Lingua"] != null ? linha["Lingua"].ToString() : null,
-                                      Parametro = linha["Parametro"] != null ? linha["Parametro"].ToString() : null,
-                                      Unidade = linha["Unidade"] != null ? linha["Unidade"].ToString() : null
+                                     DescricaoTipo  = linha["Lingua"] .ToString(),
+                                      Espessura = Convert.ToDouble( linha["Lingua"].ToString()),
+                                      Familia = linha["Familia"].ToString(),
+                                     idFamila = Convert.ToInt32( linha["idFamila"].ToString()),
+                                     Material= linha["Material"].ToString(),
+                                     TipoDeCamada = linha["TipoDeCamada"].ToString(),
+                                     Variavel= linha["Variavel"].ToString()
+
+
                                   }).ToList();
                 }
                 catch (Exception ex) { 
-                }
-                materiais = (from linha in excel.Worksheet("materiais")
-                             select new DadosExcel
-                             {
-                                 Material = linha["Material"].ToString(),
-                                 R = Convert.ToByte(linha["r"].ToString()),
-                                 G = Convert.ToByte(linha["g"].ToString()),
-                                 B = Convert.ToByte(linha["b"].ToString()),
-                             }).ToList();
-                dados = (from linha in excel.Worksheet("dados")
-                         select new DadosExcel
-                         {
-                             Lingua = linha["Lingua"].ToString(),
-                             Material = linha["Material"].ToString(),
-                             Parametro = linha["Parametro"].ToString(),
-                             ValorCatalogo = linha["ValorCatalogo"].ToString(),
-                             ValorConvertido = linha["ValorConvertido"].ToString(),
-                             UnidRevit = linha["UnidRevit"].ToString(),
-                             ValorRevit = linha["ValorRevit"].ToString(),
-                         }).ToList();
-*/
+                }*/
+               
                 Transaction t = new Transaction(uiDoc);
                 t.Start("Teste");
 
@@ -174,8 +203,40 @@ namespace POB
                     material.LookupParameter("Fabricante").Set("Revestech");
                     //material.LookupParameter("URL").Set("WWW.");
                 }
-               
                 t.Commit();
+                
+                var tipoPisoBase = new Autodesk.Revit.DB.FilteredElementCollector(uiDoc).OfClass(typeof(FloorType)).Cast<FloorType>().ToList()[0];
+                var tipoParedeBase = new Autodesk.Revit.DB.FilteredElementCollector(uiDoc).OfClass(typeof(WallType)).Cast<WallType>().ToList()[0];
+                foreach (Tipo tipo in tipos)
+                {
+                    var cmd = camadas.Where(x=>x.idFamila==tipo.id).ToList();
+                    if(cmd!=null)
+                        if(cmd.Count()>0)
+                        {
+                            t.Start("sadfwe");
+
+                            switch (tipo.Categoria)
+                            {
+                                case "Pisos":
+                                    var v = POB.Util.DuplicarFloorType(tipoPisoBase, tipo.DescricaoTipo, cmd);
+                                    v.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).Set(tipo.ComentariosDeTipo);
+                                    break;
+                                case "Paredes":
+                                    var p = POB.Util.DuplicarWallType(tipoParedeBase, tipo.DescricaoTipo, cmd);
+                                    p.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).Set(tipo.ComentariosDeTipo);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            
+
+                            t.Commit();
+                        }
+
+                } 
+
+
                 return Result.Succeeded;
             }
             catch (Exception ex)

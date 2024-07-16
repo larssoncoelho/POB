@@ -19,7 +19,8 @@ using sd = System.Drawing;
 using System.Reflection;
 using System.Collections;
 using Autodesk.Revit.DB.Mechanical;
-
+using ObjetoDeTranferencia;
+using POB.ObjetoDeTranferencia;
 namespace POB
 {
 
@@ -2719,6 +2720,66 @@ namespace POB
 
 
 
+        public static MaterialFunctionAssignment ParseEnum(string input)
+        {
+            // Tenta converter a string para enum
+            if (Enum.TryParse(input, true, out MaterialFunctionAssignment result))
+            {
+                return result;
+            }
+
+            // Se a conversão para enum falhar, tenta converter para int e depois para enum
+            if (int.TryParse(input, out int intValue))
+            {
+                if (Enum.IsDefined(typeof(MaterialFunctionAssignment), intValue))
+                {
+                    return (MaterialFunctionAssignment)intValue;
+                }
+            }
+
+            throw new ArgumentException("Invalid input for enum conversion.");
+        }
+
+        public static FloorType DuplicarFloorType(FloorType tipoOriginal, string nomeDoTipo, List<Camada> camadaNova)
+        {
+            FloorType novoTipo  = Util.FindElementByName(typeof(Autodesk.Revit.DB.FloorType), nomeDoTipo) as Autodesk.Revit.DB.FloorType;
+            if (novoTipo == null)  novoTipo = tipoOriginal.Duplicate(nomeDoTipo) as FloorType;
+            CompoundStructure estruturaAtual = novoTipo.GetCompoundStructure();   
+           var camadasDoTipo = estruturaAtual.GetLayers();
+            camadasDoTipo.Clear();
+            foreach (var camada in camadaNova)
+            {
+                Autodesk.Revit.DB.Material material = Util.FindElementByName(typeof(Autodesk.Revit.DB.Material), camada.Material) as Autodesk.Revit.DB.Material;
+                var layer = new CompoundStructureLayer(camada.Espessura / 0.3048, ParseEnum(camada.TipoDeCamada), material.Id );
+                
+                camadasDoTipo.Add(layer);
+            }
+            estruturaAtual.SetLayers( camadasDoTipo );
+            estruturaAtual.VariableLayerIndex = camadasDoTipo.Count-1;
+            novoTipo.SetCompoundStructure(estruturaAtual);
+            return novoTipo;
+
+        }
+        public static WallType DuplicarWallType(WallType tipoOriginal, string nomeDoTipo, List<Camada> camadaNova)
+        {
+            WallType novoTipo = Util.FindElementByName(typeof(Autodesk.Revit.DB.WallType), nomeDoTipo) as Autodesk.Revit.DB.WallType;
+           if(novoTipo==null)  novoTipo = tipoOriginal.Duplicate(nomeDoTipo) as WallType;
+            CompoundStructure estruturaAtual = novoTipo.GetCompoundStructure();
+            var camadasDoTipo = estruturaAtual.GetLayers();
+            camadasDoTipo.Clear();
+            foreach (var camada in camadaNova)
+            {
+                Autodesk.Revit.DB.Material material = Util.FindElementByName(typeof(Autodesk.Revit.DB.Material), camada.Material) as Autodesk.Revit.DB.Material;
+                var layer = new CompoundStructureLayer(camada.Espessura / 0.3048, ParseEnum(camada.TipoDeCamada), material.Id);
+
+                camadasDoTipo.Add(layer);
+            }
+            estruturaAtual.SetLayers(camadasDoTipo);
+            //estruturaAtual.VariableLayerIndex = camadasDoTipo.Count;
+            novoTipo.SetCompoundStructure(estruturaAtual);
+            return novoTipo;
+
+        }
         static public void ObterMaterialLayerParede(Autodesk.Revit.DB.Document documento, Autodesk.Revit.DB.Element elemento)
         {
 
