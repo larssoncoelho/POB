@@ -52,7 +52,7 @@ namespace POB
             Util.GetParameter(uiDoc, lista, "tocZona", SpecTypeId.String.Text, true, true);
             Util.GetParameter(uiDoc, lista, "tocZonaId", SpecTypeId.String.Text, true, true);
 #else
-                Util.GetParameter(uiDoc, lista, "tocAmbienteSistema", ParameterType.Text, true, true);
+            Util.GetParameter(uiDoc, lista, "tocAmbienteSistema", ParameterType.Text, true, true);
             Util.GetParameter(uiDoc, lista, "tocAmbienteSistemaId", ParameterType.Integer, true, true);
             Util.GetParameter(uiDoc, lista, "tocAmbienteNivel", ParameterType.Text, true, true);
             Util.GetParameter(uiDoc, lista, "tocAmbienteNivelId", ParameterType.Text, true, true);

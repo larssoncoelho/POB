@@ -49,14 +49,24 @@ namespace POB
 #else
                  var p1 =ParameterType.Area;
 #endif
-                    var par = Util.GetParameter(ele, "Maior face", p1, true, false);
+                    var par = Util.GetParameter(ele, "Área de projeção", p1, true, false);
                     foreach (Solid solid in Util.GetSolids(ele))
                     {
                         if (solid != null)
                         {
                            var facesVerticais = Util.GetFaceLista(solid);
-                            var maiorFace = facesVerticais.OrderByDescending(x => x.Area).First();
-                            area = area + maiorFace.Area;
+                            Autodesk.Revit.DB.Face maiorFace = null;
+                            if (facesVerticais.Count>0)
+                            {
+                            try
+                            {
+                                maiorFace = facesVerticais.OrderByDescending(x => x.Area).First();
+
+                                area = maiorFace.Area;
+                            }
+                            catch { 
+                            }
+                            }
                         }
                     }
                     Transaction t1 = new Transaction(ele.Document);
@@ -65,9 +75,9 @@ namespace POB
                     t1.Commit();
                     t1.Dispose();
                 }
-                catch
+                catch (Exception e10)
                 {
-
+                    TaskDialog.Show("_", e10.Message);
                 }
             }
             t.Commit();

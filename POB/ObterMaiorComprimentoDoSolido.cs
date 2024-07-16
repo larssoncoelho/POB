@@ -42,8 +42,9 @@ namespace POB
             //TransactionGroup t = new TransactionGroup(uiDoc);
 
             ViewSchedule _viewSchedule = uiDoc.ActiveView as ViewSchedule;
-            
+            _viewSchedule.GetCellText(Autodesk.Revit.DB.SectionType.Body, 1, 1);
             TableSectionData sectionData = _viewSchedule.GetTableData().GetSectionData(Autodesk.Revit.DB.SectionType.Body);
+
 
             var numberOfRows = sectionData.NumberOfRows;
             var numberOfColumns = sectionData.NumberOfColumns;
@@ -113,7 +114,13 @@ namespace POB
             ParameterValueProvider provider = new ParameterValueProvider(idDoParametro);
             FilterStringRuleEvaluator evaluator = new FilterStringEquals();
 
-            FilterRule rule = new FilterStringRule(provider, evaluator, valorProcurado);
+
+#if DEBGUG20211
+
+            FilterRule rule = new FilterStringRule(provider, evaluator, valorProcurado,  true);
+#else
+   FilterRule rule = new FilterStringRule(provider, evaluator, valorProcurado);
+#endif 
 
             ElementParameterFilter filter = new ElementParameterFilter(rule);
             b.Add(filter);

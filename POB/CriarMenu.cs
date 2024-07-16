@@ -422,6 +422,9 @@ namespace POB
             PushButtonData obterDataMaiorLado = new PushButtonData("cmdObterMaiorLado", "Obter maior lado", thisAssemblyPath, "POB.ObterMaiorComprimentoDoSolido");
             PushButton obterMaiorLado = painelEstrutura.AddItem(obterDataMaiorLado) as PushButton;
 
+            PushButtonData CriarTemplateData = new PushButtonData("cmdCriarTemplate", "CriarTemplate", thisAssemblyPath, "POB.CriarTemplate");
+            PushButton CriarTemplate = painelEstrutura.AddItem(CriarTemplateData) as PushButton;
+
             painelEstrutura.AddSeparator();
             PushButtonData DadosImperData = new PushButtonData("cmdDadosImper", "Dados \n imper", thisAssemblyPath, "POB.DadosImper");
             PushButton DadosImper1 = painelEstrutura.AddItem(DadosImperData) as PushButton;

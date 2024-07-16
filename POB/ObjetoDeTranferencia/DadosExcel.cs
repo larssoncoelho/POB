@@ -13,6 +13,23 @@ namespace POB.ObjetoDeTranferencia
         public string Id { get; set; }
         public string CodComposicao { get; set; }
 
+        public string  Parametro { get; set; }
+
+        public string Unidade { get; set; }
+
+        public string Lingua { get; set; }
+        public string Material { get; set; }
+        public byte R { get; set; }
+        public byte G { get; set; }
+        public byte B { get; set; }
+        public string ValorCatalogo { get; set; }
+        public string ValorConvertido { get; set; }
+        public string UnidRevit { get; set; }
+        public string ValorRevit { get; set; }
+
+
+           
+
 
     }
 }

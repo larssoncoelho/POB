@@ -1284,14 +1284,22 @@ namespace POB
             //List<PlanarFace> lista = new List<PlanarFace>();
             List<Autodesk.Revit.DB.Face> listaFace = new List<Autodesk.Revit.DB.Face>();
             // lista.Clear();
-            Autodesk.Revit.DB.FaceArray faces = solid.Faces;
-            Autodesk.Revit.DB.PlanarFace pf;
-            foreach (Autodesk.Revit.DB.Face f in faces)
+            
+            try
             {
-                listaFace.Add((f as Autodesk.Revit.DB.PlanarFace));
-             
-            }
+                Autodesk.Revit.DB.FaceArray faces = solid.Faces;
+                Autodesk.Revit.DB.PlanarFace pf;
+                foreach (Autodesk.Revit.DB.Face f in faces)
+                {
+                    listaFace.Add((f as Autodesk.Revit.DB.PlanarFace));
 
+                }
+            }
+            catch (Exception e30)
+            {
+                var t = e30.Message;
+                return listaFace;
+            }
             return listaFace;
         }
         public static Autodesk.Revit.DB.FaceArray GetHorizontalFace(Autodesk.Revit.DB.Solid solid)
@@ -2357,8 +2365,49 @@ namespace POB
             return null;
         }
 
+        static public void CriarMaterial(Autodesk.Revit.DB.Document uiDoc, string nome, byte r, byte g, byte b)
+        {
 
-        static public void CriarMaterialFuncao(Autodesk.Revit.DB.Document uiDoc)
+            Autodesk.Revit.DB.Material material = Util.FindElementByName(typeof(Autodesk.Revit.DB.Material), nome) as Autodesk.Revit.DB.Material;
+            if(material != null)
+            {
+                Autodesk.Revit.DB.Material Previsto = Util.FindElementByName(typeof(Autodesk.Revit.DB.Material), nome) as Autodesk.Revit.DB.Material;
+                Autodesk.Revit.DB.Color cor = new Autodesk.Revit.DB.Color(r, g, b);
+                Previsto.Color = cor;
+            #if DEBUG20201 || DEBGUG20211
+                            Previsto.CutForegroundPatternColor = cor;
+                            Previsto.SurfaceForegroundPatternColor = cor;
+            #else
+                            //    Previsto.SurfacePatternColor = cor;
+                            //  Previsto.CutPatternColor = cor;
+            #endif
+                            cor.Dispose();
+
+            }
+            else
+            {
+                Autodesk.Revit.DB.Material defaultm = Util.FindElementByName(typeof(Autodesk.Revit.DB.Material), "Default") as Autodesk.Revit.DB.Material;
+                Autodesk.Revit.DB.Material Previsto = defaultm.Duplicate(nome);
+                Autodesk.Revit.DB.Color cor = new Autodesk.Revit.DB.Color(r, g, b);
+                Previsto.Color = cor;
+
+                //Autodesk.Revit.DB.Element preenchimento = Util.FindElementByName(typeof(Autodesk.Revit.DB.Element), "Preenchimento sólido") as Autodesk.Revit.DB.Element;
+#if  DEBUG20201 || DEBGUG20211
+                Previsto.CutForegroundPatternColor = cor;
+                Previsto.SurfaceForegroundPatternColor = cor;
+#else
+                //// Previsto.SurfacePatternId = preenchimento.Id;
+                //   Previsto.SurfacePatternColor = cor;
+                //    Previsto.CutPatternColor = cor;
+#endif
+
+
+            }
+
+        }
+
+
+            static public void CriarMaterialFuncao(Autodesk.Revit.DB.Document uiDoc)
         {
 
 
