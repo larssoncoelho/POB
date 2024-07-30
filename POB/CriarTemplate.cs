@@ -77,7 +77,10 @@ namespace POB
                     {
                         Lingua = (rangeParametros.Cells[row, 1] as ex.Range).Text,
                         Parametro = (rangeParametros.Cells[row, 2] as ex.Range).Text,
-                        Unidade = (rangeParametros.Cells[row, 3] as ex.Range).Text
+                        Unidade = (rangeParametros.Cells[row, 3] as ex.Range).Text,
+                        ParametroIngles = (rangeParametros.Cells[row, 7] as ex.Range).Text,
+                        ParametroEspanhol = (rangeParametros.Cells[row, 8] as ex.Range).Text,
+
                     };
                     parametros.Add(dado);
                 }
@@ -140,6 +143,8 @@ namespace POB
                     camadas.Add(camada);
                 }
 
+
+
                 workbook.Close(false);
                 excelApp.Quit();
 
@@ -148,27 +153,71 @@ namespace POB
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
 
-               
-               /* var excel = new ExcelQueryFactory(caminho) { ReadOnly = true };
-                try
+
+                /* var excel = new ExcelQueryFactory(caminho) { ReadOnly = true };
+                 try
+                 {
+                     camadas = (from linha in excel.Worksheet("camadas")
+                                   select new Camada
+                                   {
+                                      DescricaoTipo  = linha["Lingua"] .ToString(),
+                                       Espessura = Convert.ToDouble( linha["Lingua"].ToString()),
+                                       Familia = linha["Familia"].ToString(),
+                                      idFamila = Convert.ToInt32( linha["idFamila"].ToString()),
+                                      Material= linha["Material"].ToString(),
+                                      TipoDeCamada = linha["TipoDeCamada"].ToString(),
+                                      Variavel= linha["Variavel"].ToString()
+
+
+                                   }).ToList();
+                 }
+                 catch (Exception ex) { 
+                 }*/
+                Transaction tCriarParametros = new Transaction(uiDoc);
+                tCriarParametros.Start("Teste");
+                POB.Util.uiDoc = uiDoc;
+                foreach (DadosExcel d in parametros)
                 {
-                    camadas = (from linha in excel.Worksheet("camadas")
-                                  select new Camada
-                                  {
-                                     DescricaoTipo  = linha["Lingua"] .ToString(),
-                                      Espessura = Convert.ToDouble( linha["Lingua"].ToString()),
-                                      Familia = linha["Familia"].ToString(),
-                                     idFamila = Convert.ToInt32( linha["idFamila"].ToString()),
-                                     Material= linha["Material"].ToString(),
-                                     TipoDeCamada = linha["TipoDeCamada"].ToString(),
-                                     Variavel= linha["Variavel"].ToString()
-
-
-                                  }).ToList();
+                    Autodesk.Revit.DB.ParameterType tipo = ObterTipo(d.Unidade);
+                    Util.GetParameter(uiDoc, categorySet, d.ParametroEspanhol, tipo, true, false);
+                    Util.GetParameter(uiDoc, categorySet, d.ParametroIngles, tipo, true, false);
                 }
-                catch (Exception ex) { 
-                }*/
-               
+                tCriarParametros.Commit();
+                Transaction tCopiarDados = new Transaction(uiDoc);
+                tCopiarDados.Start("Teste");
+
+                
+                var materiaisModelo = new Autodesk.Revit.DB.FilteredElementCollector(uiDoc).OfClass(typeof(Autodesk.Revit.DB.Material)).Cast<Autodesk.Revit.DB.Material>();
+
+                foreach (var material in materiaisModelo)
+                {
+
+                    foreach (DadosExcel d in parametros)
+                    {
+                        var pOriginal = material.LookupParameter(d.Parametro);
+                        var pTraduzidoIngles = material.LookupParameter(d.ParametroIngles);
+                        var pTraduzidoEspanhol = material.LookupParameter(d.ParametroEspanhol);
+
+
+
+                        switch (pOriginal.Definition.ParameterType)
+                        {
+                            case ParameterType.Text:
+                            case ParameterType.URL:
+                                pTraduzidoIngles.Set(pOriginal.AsString());
+                                pTraduzidoEspanhol.Set(pOriginal.AsString());
+
+                                break;
+                            default:
+                                pTraduzidoIngles.SetValueString(pOriginal.AsValueString());
+                                pTraduzidoEspanhol.SetValueString(pOriginal.AsValueString());
+                                break;
+                        }
+                    }
+                }
+                tCopiarDados.Commit();
+                return Result.Succeeded;
+
                 Transaction t = new Transaction(uiDoc);
                 t.Start("Teste");
 
@@ -252,6 +301,8 @@ namespace POB
                 case "m":
                     return Autodesk.Revit.DB.ParameterType.Length;
                 case "g/m2":
+                    return Autodesk.Revit.DB.ParameterType.MassPerUnitArea;
+                case "Kg/m²":
                     return Autodesk.Revit.DB.ParameterType.MassPerUnitArea;
                 case "mm":
                     return Autodesk.Revit.DB.ParameterType.DisplacementDeflection;

@@ -26,10 +26,7 @@ namespace POB.ObjetoDeTranferencia
         public string ValorConvertido { get; set; }
         public string UnidRevit { get; set; }
         public string ValorRevit { get; set; }
-
-
-           
-
-
+        public string ParametroIngles { get;  set; }
+        public string ParametroEspanhol { get;  set; }
     }
 }
