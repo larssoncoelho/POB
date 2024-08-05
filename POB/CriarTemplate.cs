@@ -65,7 +65,7 @@ namespace POB
 
 
                 ex.Range rangeDados = dadosExcel.UsedRange;
-                ex.Range rangeMateriais= materiaisExcel.UsedRange;
+                ex.Range rangeMateriais = materiaisExcel.UsedRange;
                 ex.Range rangeParametros = worksheet.UsedRange;
                 ex.Range rangeTipos = tiposExcel.UsedRange;
                 ex.Range rangeCamadas = camadasExcel.UsedRange;
@@ -116,13 +116,13 @@ namespace POB
                 {
                     Tipo dado = new Tipo
                     {
-                        id = Convert.ToInt32( (rangeTipos.Cells[row, 1] as Range).Text),
+                        id = Convert.ToInt32((rangeTipos.Cells[row, 1] as Range).Text),
                         Categoria = (rangeTipos.Cells[row, 2] as Range).Text,
-                        Familia= (rangeTipos.Cells[row, 3] as Range).Text,
+                        Familia = (rangeTipos.Cells[row, 3] as Range).Text,
 
                         DescricaoTipo = (rangeTipos.Cells[row, 4] as Range).Text,
                         ComentariosDeTipo = (rangeTipos.Cells[row, 5] as Range).Text,
-                     
+
 
                     };
                     tipos.Add(dado);
@@ -132,11 +132,11 @@ namespace POB
                 {
                     Camada camada = new Camada
                     {
-                        idFamila = Convert.ToInt32( (rangeCamadas.Cells[row, 1] as Range).Text),
+                        idFamila = Convert.ToInt32((rangeCamadas.Cells[row, 1] as Range).Text),
                         Familia = (rangeCamadas.Cells[row, 2] as Range).Text,
                         DescricaoTipo = (rangeCamadas.Cells[row, 3] as Range).Text,
                         Material = (rangeCamadas.Cells[row, 4] as Range).Text,
-                        Espessura = Convert.ToDouble( (rangeCamadas.Cells[row, 5] as Range).Text),
+                        Espessura = Convert.ToDouble((rangeCamadas.Cells[row, 5] as Range).Text),
                         TipoDeCamada = (rangeCamadas.Cells[row, 6] as Range).Text,
                         Variavel = Convert.ToInt32((rangeCamadas.Cells[row, 7] as Range).Text),
                     };
@@ -173,12 +173,24 @@ namespace POB
                  }
                  catch (Exception ex) { 
                  }*/
+#if D23 || D24
+            }
+            catch (Exception ex)
+            {
+            }
+            return Result.Succeeded;
+        }
+    }
+}
+#else
                 Transaction tCriarParametros = new Transaction(uiDoc);
                 tCriarParametros.Start("Teste");
                 POB.Util.uiDoc = uiDoc;
                 foreach (DadosExcel d in parametros)
                 {
+                  
                     Autodesk.Revit.DB.ParameterType tipo = ObterTipo(d.Unidade);
+                    
                     Util.GetParameter(uiDoc, categorySet, d.ParametroEspanhol, tipo, true, false);
                     Util.GetParameter(uiDoc, categorySet, d.ParametroIngles, tipo, true, false);
                 }
@@ -293,7 +305,9 @@ namespace POB
                 return Result.Cancelled;
 
             }
+
         }
+
         public Autodesk.Revit.DB.ParameterType ObterTipo (string nome)
         {
             switch (nome)
@@ -324,3 +338,4 @@ namespace POB
         }
     }
 }
+#endif

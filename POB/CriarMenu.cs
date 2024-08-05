@@ -336,7 +336,7 @@ namespace POB
                         */
 
 
-           PushButtonData criarPilarDoIFCData = new PushButtonData("cmdAvancar", "Pilar \n IFC", thisAssemblyPath, "POB.CriarPilarDoIFC" );
+            /*PushButtonData criarPilarDoIFCData = new PushButtonData("cmdAvancar", "Pilar \n IFC", thisAssemblyPath, "POB.CriarPilarDoIFC" );
             PushButton criarPilarDoIFC = painelEstrutura.AddItem(criarPilarDoIFCData) as PushButton;
             //criarPilarDoIFC.LargeImage = largeImage;
             painelEstrutura.AddSeparator();
@@ -378,7 +378,7 @@ namespace POB
             painelEstrutura.AddSeparator();
 
             */
-            PushButtonData revestiPilarData = new PushButtonData("cmdRevestirPilar", "Revestir \n Pilar", thisAssemblyPath, "POB.RevestiPilar");
+           /* PushButtonData revestiPilarData = new PushButtonData("cmdRevestirPilar", "Revestir \n Pilar", thisAssemblyPath, "POB.RevestiPilar");
             PushButton revestiPilar = painelEstrutura.AddItem(revestiPilarData) as PushButton;
             painelEstrutura.AddSeparator();
 
@@ -413,7 +413,7 @@ namespace POB
             /*  PushButtonData GetNivelExtraidoData = new PushButtonData("cmdGetNivelExtraidoData", "Nível \n extraído", thisAssemblyPath, "POB.GetNivelExtraido");
               PushButton GetNivelExtraido = painelEstrutura.AddItem(GetNivelExtraidoData) as PushButton;
               */
-            PushButtonData obterData = new PushButtonData("cmdObter", "Obter volume", thisAssemblyPath, "POB.ObterVolume");
+          /*  PushButtonData obterData = new PushButtonData("cmdObter", "Obter volume", thisAssemblyPath, "POB.ObterVolume");
             PushButton obter = painelEstrutura.AddItem(obterData) as PushButton;
 
             PushButtonData obterDataMaiorFace = new PushButtonData("cmdObterMaiorFace", "Obter maior face", thisAssemblyPath, "POB.ObterMaiorFace");
@@ -425,7 +425,7 @@ namespace POB
             PushButtonData CriarTemplateData = new PushButtonData("cmdCriarTemplate", "CriarTemplate", thisAssemblyPath, "POB.CriarTemplate");
             PushButton CriarTemplate = painelEstrutura.AddItem(CriarTemplateData) as PushButton;
 
-            painelEstrutura.AddSeparator();
+            painelEstrutura.AddSeparator();*/
             PushButtonData DadosImperData = new PushButtonData("cmdDadosImper", "Dados \n imper", thisAssemblyPath, "POB.DadosImper");
             PushButton DadosImper1 = painelEstrutura.AddItem(DadosImperData) as PushButton;
             DadosImper1.LargeImage = icone_imperminacaao24x24px;
@@ -435,7 +435,7 @@ namespace POB
             PushButton GerarInclinacaoPiso = painelEstrutura.AddItem(GerarInclinacaoPisoData) as PushButton;
             GerarInclinacaoPiso.LargeImage = icone_nivel24x24px;
             GerarInclinacaoPiso.Image = icone_nivel16x16px;
-            PushButtonData renumeraMontagemData = new PushButtonData("cmRenumerar", "Renumerar", thisAssemblyPath, "POB.RenumeraItens");
+            /*PushButtonData renumeraMontagemData = new PushButtonData("cmRenumerar", "Renumerar", thisAssemblyPath, "POB.RenumeraItens");
             PushButton renumeraMontagem  = painelEstrutura.AddItem(renumeraMontagemData) as PushButton;
             /*PushButtonData ObterAmbienteData = new PushButtonData("cmdObterAmbiente", "Obter ambiente", thisAssemblyPath, "POB.GetAmbiente");
             PushButton ObterAmbiente = painelEstrutura.AddItem(ObterAmbienteData) as PushButton;

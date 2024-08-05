@@ -116,6 +116,7 @@ return vetor[1];
                     {
 
                         ele1.LookupParameter("tocCodigoImper").Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                        
                         listaElemento.Add(new ElementoResumido
                         {
                             Tipo = "Junta",
@@ -141,8 +142,10 @@ return vetor[1];
                         var lista = Util.GetPointsDoPiso(floor).Distinct().ToList();
                         var listaSemOsPontosDaBase = (from a in lista  select a).ToList();
 
-
-                        double tocDescontarEspessuraRegularizacao = 0;
+                        var p1 = floor.LookupParameter("tocCodigoImper");
+                        if (!p1.IsReadOnly)  p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                        
+                       double tocDescontarEspessuraRegularizacao = 0;
 
                         var parDesconto = ele1.LookupParameter("tocDescontarEspessuraRegularizacao");
                         if (parDesconto != null)
@@ -165,16 +168,13 @@ return vetor[1];
                             TocDescontarEspessuraRegularizacao = tocDescontarEspessuraRegularizacao
 
                         });
-
-
-
                         (ele1 as Floor).LookupParameter("tocEspessuraRealMaxima").Set(Convert.ToDouble(pontoMaximoReal - GetEspessuraAcabamento((ele1 as Floor)) - pontoMaisBaixoDaFaceInferior- tocDescontarEspessuraRegularizacao));
-
-
                     }
                     if (ele1 is RoofBase)
                     {
                         RoofBase floor = ele1 as RoofBase;
+                        var p1 = floor.LookupParameter("tocCodigoImper");
+                        if (!p1.IsReadOnly) p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
                         listaElemento.Add(new ElementoResumido
                         {
                             Tipo = "Telhado",

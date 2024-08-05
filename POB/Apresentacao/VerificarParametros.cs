@@ -35,10 +35,10 @@ namespace POB.Apresentacao
             rvt.Transaction t = new rvt.Transaction(UIDoc);
             
             var par = Util.GetParameter(ele, novoCampo,
-#if D24
+#if D24||D23
                 rvt.SpecTypeId.String.Text,
 #else
- rvt.ParameterType.Text,
+             rvt.ParameterType.Text,
 #endif
                 true, true);
             
