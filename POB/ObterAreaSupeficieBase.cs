@@ -35,6 +35,7 @@ namespace POB
         {
             UIApplication uiApp = revit.Application;
             Document uiDoc = uiApp.ActiveUIDocument.Document;
+            uiDoc.Save();
             Selection sel = uiApp.ActiveUIDocument.Selection;
             TransactionGroup t = new TransactionGroup(uiDoc);
             t.Start("Teste");
@@ -50,6 +51,12 @@ namespace POB
                 try
                 {
                     var par = Util.GetParameter(ele, "Área base do sólido",p, true, false);
+                    if (par == null)
+                    {
+                        TaskDialog.Show("Contrutivel", "Faltou criar o parâmetro 'Área base do sólido'");
+                        return Result.Cancelled;
+        
+                    }
                     foreach (Solid solid in Util.GetSolids(ele))
                     {
                         if (solid != null)

@@ -38,6 +38,7 @@ namespace POB.Apresentacao
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             Continuar = true;
             this.Close();
         }

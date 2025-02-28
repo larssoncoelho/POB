@@ -355,10 +355,7 @@ namespace POB
             //criarTabicaDaLaje.LargeImage = largeImage;
             painelEstrutura.AddSeparator();           
 
-            PushButtonData extrairData = new PushButtonData("cmdextrair", "Extrair", thisAssemblyPath, "POB.ExtrairDados");
-            PushButton extrair = painelEstrutura.AddItem(extrairData) as PushButton;
-            //criarTabicaDaLaje.LargeImage = largeImage;
-            painelEstrutura.AddSeparator();
+          
 
             PushButtonData herdarData = new PushButtonData("cmdHerdar", "Herdar", thisAssemblyPath, "POB.HerdarValoresParametros");
             PushButton herdar = painelEstrutura.AddItem(herdarData) as PushButton;
@@ -378,54 +375,74 @@ namespace POB
             painelEstrutura.AddSeparator();
 
             */
-           /* PushButtonData revestiPilarData = new PushButtonData("cmdRevestirPilar", "Revestir \n Pilar", thisAssemblyPath, "POB.RevestiPilar");
-            PushButton revestiPilar = painelEstrutura.AddItem(revestiPilarData) as PushButton;
-            painelEstrutura.AddSeparator();
-
-            
+            /* PushButtonData revestiPilarData = new PushButtonData("cmdRevestirPilar", "Revestir \n Pilar", thisAssemblyPath, "POB.RevestiPilar");
+             PushButton revestiPilar = painelEstrutura.AddItem(revestiPilarData) as PushButton;
+             painelEstrutura.AddSeparator();
 
 
 
-            PushButtonData criarFormaData = new PushButtonData("cmdcriarForma", "Forma", thisAssemblyPath, "POB.CriarForma");
-            PushButton criarForma = painelEstrutura.AddItem(criarFormaData) as PushButton;
 
 
-            painelEstrutura.AddSeparator();
+             PushButtonData criarFormaData = new PushButtonData("cmdcriarForma", "Forma", thisAssemblyPath, "POB.CriarForma");
+             PushButton criarForma = painelEstrutura.AddItem(criarFormaData) as PushButton;
 
 
-            PushButtonData medidaJanelaData = new PushButtonData("cmdmedidaJanela", "Medida \n janela", thisAssemblyPath, "POB.MedidaJanela");
-            PushButton medidaJanela = painelEstrutura.AddItem(medidaJanelaData) as PushButton;
+             painelEstrutura.AddSeparator();
 
-            
-            PushButtonData ObterAreaSupeficieBaseData = new PushButtonData("cmdObterAreaSupeficieBase", "Área \n base", thisAssemblyPath, "POB.ObterAreaSupeficieBase");
-            PushButton ObterAreaSupeficieBaseJanela = painelEstrutura.AddItem(ObterAreaSupeficieBaseData) as PushButton;
 
-            PushButtonData ObterAreaSupeficieLateralData = new PushButtonData("cmdObterAreaSupeficieLateral", 
-                                          "Área \n lateral", 
-                                          thisAssemblyPath, 
-                                          "POB.ObterAreaLateral");
-            PushButton ObterAreaSupeficieLateral = painelEstrutura.AddItem(ObterAreaSupeficieLateralData) as PushButton;
+             PushButtonData medidaJanelaData = new PushButtonData("cmdmedidaJanela", "Medida \n janela", thisAssemblyPath, "POB.MedidaJanela");
+             PushButton medidaJanela = painelEstrutura.AddItem(medidaJanelaData) as PushButton;*/
 
-            PushButtonData ObterDiametroData = new PushButtonData("cmdDiâmetro", "Obter \n diâmetro", thisAssemblyPath, "POB.ObterDiametro");
-            PushButton ObterDiametro = painelEstrutura.AddItem(ObterDiametroData) as PushButton;
+
+             PushButtonData ObterAreaSupeficieBaseData = new PushButtonData("cmdObterAreaSupeficieBase", "Área \n base", thisAssemblyPath, "POB.ObterAreaSupeficieBase");
+             PushButton ObterAreaSupeficieBaseJanela = painelEstrutura.AddItem(ObterAreaSupeficieBaseData) as PushButton;
            
+             PushButtonData ObterAreaSupeficieLateralData = new PushButtonData("cmdObterAreaSupeficieLateral", 
+                                           "Área \n lateral", 
+                                           thisAssemblyPath, 
+                                           "POB.ObterAreaLateral");
+             PushButton ObterAreaSupeficieLateral = painelEstrutura.AddItem(ObterAreaSupeficieLateralData) as PushButton;
 
-            /*  PushButtonData GetNivelExtraidoData = new PushButtonData("cmdGetNivelExtraidoData", "Nível \n extraído", thisAssemblyPath, "POB.GetNivelExtraido");
-              PushButton GetNivelExtraido = painelEstrutura.AddItem(GetNivelExtraidoData) as PushButton;
-              */
-          /*  PushButtonData obterData = new PushButtonData("cmdObter", "Obter volume", thisAssemblyPath, "POB.ObterVolume");
+             PushButtonData ObterDiametroData = new PushButtonData("cmdDiâmetro", "Obter \n diâmetro", thisAssemblyPath, "POB.ObterDiametro");
+             PushButton ObterDiametro = painelEstrutura.AddItem(ObterDiametroData) as PushButton;
+
+
+           /* PushButtonData GetNivelExtraidoData = new PushButtonData("cmdGetNivelExtraidoData", "Nível \n extraído", thisAssemblyPath, "POB.GetNivelExtraido");
+               PushButton GetNivelExtraido = painelEstrutura.AddItem(GetNivelExtraidoData) as PushButton;
+              */ 
+            PushButtonData extrairData = new PushButtonData("cmdextrair", "Extrair", thisAssemblyPath, "POB.ExtrairDados");
+            PushButton extrair = painelEstrutura.AddItem(extrairData) as PushButton;
+            //criarTabicaDaLaje.LargeImage = largeImage;
+            painelEstrutura.AddSeparator();
+
+            PushButtonData obterData = new PushButtonData("cmdObter", "Obter volume", thisAssemblyPath, "POB.ObterVolume");
             PushButton obter = painelEstrutura.AddItem(obterData) as PushButton;
 
             PushButtonData obterDataMaiorFace = new PushButtonData("cmdObterMaiorFace", "Obter maior face", thisAssemblyPath, "POB.ObterMaiorFace");
             PushButton obterMaiorFace = painelEstrutura.AddItem(obterDataMaiorFace) as PushButton;
-           
+
+            PushButtonData pisoParaForroData = new PushButtonData("cmdpisoParaForroData", "Piso para forro", thisAssemblyPath, "POB.CriarForroAPartirdoPiso");
+            PushButton pisoParaForro = painelEstrutura.AddItem(pisoParaForroData) as PushButton;
+
             PushButtonData obterDataMaiorLado = new PushButtonData("cmdObterMaiorLado", "Obter maior lado", thisAssemblyPath, "POB.ObterMaiorComprimentoDoSolido");
             PushButton obterMaiorLado = painelEstrutura.AddItem(obterDataMaiorLado) as PushButton;
+
+            PushButtonData dadosVista3DData = new PushButtonData("cmdDadosVista3D", "Dados 3D", thisAssemblyPath, "POB.DadosVista3D");
+            PushButton dadosVista3D = painelEstrutura.AddItem(dadosVista3DData) as PushButton;
+
+            PushButtonData dadosVista3DImagemData = new PushButtonData("cmdDadosVista3DImagem", "Dados 3D Imagem", thisAssemblyPath, "POB.DadosVista3DImagem");
+            PushButton dadosVista3DImagem = painelEstrutura.AddItem(dadosVista3DImagemData) as PushButton;
+
+            PushButtonData dadosDadosEixo = new PushButtonData("cmdDadosEixo", "DadosEixo", thisAssemblyPath, "POB.DadosEixo");
+            PushButton DadosEixo = painelEstrutura.AddItem(dadosDadosEixo) as PushButton;
+
+            PushButtonData dadosDadosVista = new PushButtonData("cmdDadosVista", "DadosVista", thisAssemblyPath, "POB.DadosVista");
+            PushButton DadosVista = painelEstrutura.AddItem(dadosDadosVista) as PushButton;
 
             PushButtonData CriarTemplateData = new PushButtonData("cmdCriarTemplate", "CriarTemplate", thisAssemblyPath, "POB.CriarTemplate");
             PushButton CriarTemplate = painelEstrutura.AddItem(CriarTemplateData) as PushButton;
 
-            painelEstrutura.AddSeparator();*/
+            painelEstrutura.AddSeparator();
             PushButtonData DadosImperData = new PushButtonData("cmdDadosImper", "Dados \n imper", thisAssemblyPath, "POB.DadosImper");
             PushButton DadosImper1 = painelEstrutura.AddItem(DadosImperData) as PushButton;
             DadosImper1.LargeImage = icone_imperminacaao24x24px;
@@ -443,10 +460,10 @@ namespace POB
             /*      PushButtonData BuscarProplemasData = new PushButtonData("cmdBuscarProplemas", " Buscar", thisAssemblyPath, "POB.BuscarProblemas");
                   PushButton BuscarProplemas = painelEstrutura.AddItem(BuscarProplemasData) as PushButton;
             */
-            /*PushButtonData ExpProplemasData = new PushButtonData("ObterId", "ObterId", 
+            PushButtonData ExpProplemasData = new PushButtonData("ObterId", "ObterId", 
                 thisAssemblyPath, "POB.ObterId");
             PushButton ExpProplemas = painelEstrutura.AddItem(ExpProplemasData) as PushButton;
-            */
+            
             CriarMenu.ListaDeChapas.Add(new ObjetoTransferenciaPOB.DadosChapa
             {
                 Bitola= "#26",

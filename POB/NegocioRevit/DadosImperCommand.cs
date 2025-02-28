@@ -63,6 +63,39 @@ return vetor[1];
                 Autodesk.Revit.DB.AssemblyInstance assemblyInstance = ele as AssemblyInstance;
                 //Material materialImper = uiDoc.GetElement(new ElementId(-1)) as Material;
                 listaElemento.Clear();
+                var tocNomeSistema = "";
+                var tocVup = "";
+                var tocOrdem = ""; 
+                
+
+                try
+                {
+                    ElementId idParametroGlobal = GlobalParametersManager.FindByName(uiDoc, assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                    if ((idParametroGlobal != null) | (idParametroGlobal.IntegerValue != -1))
+                    {
+                        string nome = ((uiDoc.GetElement(idParametroGlobal) as GlobalParameter).GetValue() as StringParameterValue).Value;
+                        var vetor = nome.Split('|');
+                        if (vetor.Length >= 2)
+                        {
+                            tocNomeSistema = vetor[0];
+                            tocVup = vetor[1];
+                            tocOrdem= vetor[2];
+                            assemblyInstance.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                            assemblyInstance.LookupParameter("tocVUP").Set(tocVup);
+                            assemblyInstance.LookupParameter("tocOrdem").Set(Convert.ToInt32(tocOrdem));
+                        }
+                        else
+                        {
+                            tocNomeSistema = nome;
+                            assemblyInstance.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+
                 foreach (var item in assemblyInstance.GetMemberIds())
                 {
                     Element ele1 = uiDoc.GetElement(item);
@@ -74,7 +107,18 @@ return vetor[1];
                             if (tocDesconsiderarElemento.HasValue)
                                 if (tocDesconsiderarElemento.AsInteger() != 0)
                                 {
+                                   /* tocNomeSistema = "";
+                                    var tocVup = "";
+                                    var tocOrdem = "";*/
                                     ele1.LookupParameter("tocCodigoImper").Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                                    ele1.LookupParameter("tocPavimento").Set(assemblyInstance.LookupParameter("tocPavimento").AsString());
+                                    ele1.LookupParameter("tocAreaTotal").Set(ele1.LookupParameter("tocAreaTotal").AsDouble());
+
+                                    ele1.LookupParameter("tocAmbiente").Set(assemblyInstance.LookupParameter("tocAmbiente").AsString());
+                                    ele1.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                                    ele1.LookupParameter("tocVUP").Set(tocVup);
+                                    ele1.LookupParameter("tocOrdem").Set(tocOrdem);
+
                                     listaElemento.Add(new ElementoResumido
                                     {
                                         Tipo = "Parede",
@@ -91,6 +135,13 @@ return vetor[1];
                             var p1 = ele1.LookupParameter("tocCodigoImper");
                             if (!p1.IsReadOnly) { 
                                 p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                                ele1.LookupParameter("tocAmbiente").Set(assemblyInstance.LookupParameter("tocAmbiente").AsString());
+                                ele1.LookupParameter("tocPavimento").Set(assemblyInstance.LookupParameter("tocPavimento").AsString());
+                                ele1.LookupParameter("tocAreaTotal").Set(ele1.LookupParameter("Área").AsDouble());
+
+                                ele1.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                                ele1.LookupParameter("tocVUP").Set(tocVup);
+                                ele1.LookupParameter("tocOrdem").Set(tocOrdem);
                                 listaElemento.Add(new ElementoResumido
                                 {
                                     Tipo = "Parede",
@@ -116,7 +167,13 @@ return vetor[1];
                     {
 
                         ele1.LookupParameter("tocCodigoImper").Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
-                        
+                        ele1.LookupParameter("tocPavimento").Set(assemblyInstance.LookupParameter("tocPavimento").AsString());
+                        ele1.LookupParameter("tocAreaTotal").Set(ele1.LookupParameter("Área").AsDouble());
+
+                        ele1.LookupParameter("tocAmbiente").Set(assemblyInstance.LookupParameter("tocAmbiente").AsString());
+                        ele1.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                        ele1.LookupParameter("tocVUP").Set(tocVup);
+                        ele1.LookupParameter("tocOrdem").Set(tocOrdem);
                         listaElemento.Add(new ElementoResumido
                         {
                             Tipo = "Junta",
@@ -143,9 +200,19 @@ return vetor[1];
                         var listaSemOsPontosDaBase = (from a in lista  select a).ToList();
 
                         var p1 = floor.LookupParameter("tocCodigoImper");
-                        if (!p1.IsReadOnly)  p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
-                        
-                       double tocDescontarEspessuraRegularizacao = 0;
+                        if (!p1.IsReadOnly)
+                        {
+                            p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                            ele1.LookupParameter("tocAmbiente").Set(assemblyInstance.LookupParameter("tocAmbiente").AsString());
+                            ele1.LookupParameter("tocAreaTotal").Set(ele1.LookupParameter("Área").AsDouble());
+
+                            ele1.LookupParameter("tocPavimento").Set(assemblyInstance.LookupParameter("tocPavimento").AsString());
+                            ele1.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                            ele1.LookupParameter("tocVUP").Set(tocVup);
+                            ele1.LookupParameter("tocOrdem").Set(tocOrdem);
+                        }
+
+                            double tocDescontarEspessuraRegularizacao = 0;
 
                         var parDesconto = ele1.LookupParameter("tocDescontarEspessuraRegularizacao");
                         if (parDesconto != null)
@@ -161,6 +228,7 @@ return vetor[1];
                             Tipo = "Piso",
                             TocAreaPiso = (ele1 as Floor).LookupParameter("Área").AsDouble(),
                             TocVolume = (ele1 as Floor).LookupParameter("Volume").AsDouble(),
+                            
                             TocEspessuraRealMinima = GetEspessuraRealMinima((ele1 as Floor)),
                             TocEspessuraAcabamento = GetEspessuraAcabamento((ele1 as Floor)),
                             TocEspessuraRealMaxima = pontoMaximoReal - GetEspessuraAcabamento((ele1 as Floor)) - pontoMaisBaixoDaFaceInferior,
@@ -174,7 +242,18 @@ return vetor[1];
                     {
                         RoofBase floor = ele1 as RoofBase;
                         var p1 = floor.LookupParameter("tocCodigoImper");
-                        if (!p1.IsReadOnly) p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                        if (!p1.IsReadOnly)
+                        {
+
+                            p1.Set(assemblyInstance.LookupParameter("tocCodigoImper").AsString());
+                            ele1.LookupParameter("tocAmbiente").Set(assemblyInstance.LookupParameter("tocAmbiente").AsString());
+                            ele1.LookupParameter("tocPavimento").Set(assemblyInstance.LookupParameter("tocPavimento").AsString());
+                            ele1.LookupParameter("tocAreaTotal").Set(ele1.LookupParameter("Área").AsDouble());
+
+                            ele1.LookupParameter("tocNomeSistema").Set(tocNomeSistema);
+                            ele1.LookupParameter("tocVup").Set(tocVup);
+                            ele1.LookupParameter("tocOrdem").Set(tocOrdem);
+                        }
                         listaElemento.Add(new ElementoResumido
                         {
                             Tipo = "Telhado",
@@ -190,29 +269,7 @@ return vetor[1];
 
                     }
                 }
-                try
-                {
-                    ElementId idParametroGlobal = GlobalParametersManager.FindByName(uiDoc, assemblyInstance.LookupParameter("tocCodigoImper").AsString());
-                    if ((idParametroGlobal != null) | (idParametroGlobal.IntegerValue != -1))
-                    {
-                        string nome = ((uiDoc.GetElement(idParametroGlobal) as GlobalParameter).GetValue() as StringParameterValue).Value;
-                        var vetor = nome.Split('|');
-                        if (vetor.Length >= 2)
-                        {
-                            assemblyInstance.LookupParameter("tocNomeSistema").Set(vetor[0]);
-                            assemblyInstance.LookupParameter("tocVUP").Set(vetor[1]);
-                            assemblyInstance.LookupParameter("tocOrdem").Set(Convert.ToInt32(vetor[2]));
-                        }
-                        else
-                        {
-                            assemblyInstance.LookupParameter("tocNomeSistema").Set(nome);
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
+                
 
                 double? tocDescontarEspessuraRegulazacaoMontagem = 0;
                 try

@@ -121,6 +121,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="AdWindows" Condition="'$(Configuration)|$(Platform)' == 'D23|AnyCPU'">
@@ -237,7 +240,12 @@
     </Compile>
     <Compile Include="BuscarProblemas.cs" />
     <Compile Include="Componentes.cs" />
+    <Compile Include="CriarForroAPartirdoPiso.cs" />
     <Compile Include="CriarTemplate.cs" />
+    <Compile Include="DadosEixo.cs" />
+    <Compile Include="DadosVista.cs" />
+    <Compile Include="DadosVista3D.cs" />
+    <Compile Include="DadosVista3DImagem.cs" />
     <Compile Include="DockableDialogs\AvailabilityNoOpenDocument.cs" />
     <Compile Include="DockableDialogs\CmdSelectionChanged.cs" />
     <Compile Include="DockableDialogs\ColecaoServico.cs" />
@@ -264,6 +272,7 @@
     <Compile Include="ObjetoDeTranferencia\Camada.cs" />
     <Compile Include="ObjetoDeTranferencia\DadosExcel.cs" />
     <Compile Include="ObjetoDeTranferencia\ETAPA.cs" />
+    <Compile Include="ObjetoDeTranferencia\ListaDeId.cs" />
     <Compile Include="ObjetoDeTranferencia\Servico.cs" />
     <Compile Include="ObjetoDeTranferencia\ServicoEtapa.cs" />
     <Compile Include="ObjetoDeTranferencia\Tipo.cs" />

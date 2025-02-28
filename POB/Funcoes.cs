@@ -21,6 +21,9 @@ using System.Collections;
 using Autodesk.Revit.DB.Mechanical;
 using ObjetoDeTranferencia;
 using POB.ObjetoDeTranferencia;
+using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
+using System.Drawing;
 namespace POB
 {
 
@@ -165,7 +168,14 @@ namespace POB
 
         }
     }
-
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;   // Coordenada do lado esquerdo
+        public int Top;    // Coordenada do topo
+        public int Right;  // Coordenada do lado direito
+        public int Bottom; // Coordenada da parte inferior
+    }
 
     public static class Util
     {
@@ -181,6 +191,92 @@ namespace POB
         /// Convert a given length in millimetres to feet.
         /// </summary>
         /// 
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(System.Drawing.Point point);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
+        public static void CaptureRevitView(RECT rect)
+        {
+            /*// Obter o handle da janela ativa (Revit)
+            IntPtr hwnd = GetForegroundWindow();
+
+            // Obter as dimensões da janela ativa
+            System.Drawing.Rectangle rect = new System.Drawing.Rectangle();
+            GetWindowRect(hwnd, ref rect);
+
+            // Determinar a área da visualização (ajuste conforme necessário)
+            int offsetX = 10; // Exemplo: ajuste para barras de rolagem
+            int offsetY = 80; // Exemplo: ajuste para menus do Revit
+            System.Drawing.Rectangle viewRect = new System.Drawing.Rectangle(
+                rect.X + offsetX,
+                rect.Y + offsetY,
+                rect.Width - offsetX * 2,
+                rect.Height - offsetY - 10 // Ajustar a borda inferior
+            );
+
+            // Capturar a janela de visualização
+            */
+            System.Drawing.Rectangle viewRect = new System.Drawing.Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+            using (Bitmap screenshot = new Bitmap(viewRect.Width, viewRect.Height))
+            {
+                using (Graphics graphics = Graphics.FromImage(screenshot))
+                {
+                    graphics.CopyFromScreen(viewRect.Location, System.Drawing.Point.Empty, viewRect.Size);
+                }
+
+                // Salvar e copiar para a área de transferência
+                string filePath = @"d:\ExportedView.BMP";
+                screenshot.Save(filePath, ImageFormat.Bmp);
+                wf.Clipboard.SetImage(screenshot);
+
+                // MessageBox.Show($"A captura foi salva em {filePath} e copiada para a área de transferência.", "Captura de Tela");
+            }
+        }
+        public static RECT CaptureWindowRect()
+        {
+            RECT windowRect = new RECT();
+            // Esperar o clique do mouse
+            //wf.MessageBox.Show("Clique na janela que deseja capturar.", "Captura de Janela");
+
+            // Pegar a posição atual do cursor
+            System.Drawing.Point cursorPosition = wf.Cursor.Position;
+
+            // Obter o handle da janela sob o cursor
+            IntPtr hWnd = WindowFromPoint(cursorPosition);
+
+            if (hWnd != IntPtr.Zero)
+            {
+                // Obter o retângulo da janela
+                if (GetWindowRect(hWnd, out windowRect))
+                {
+                    // Calcular as dimensões da janela
+                    int width = windowRect.Right - windowRect.Left;
+                    int height = windowRect.Bottom - windowRect.Top;
+
+                    // Obter o título da janela (opcional)
+                    System.Text.StringBuilder title = new System.Text.StringBuilder(256);
+                    GetWindowText(hWnd, title, title.Capacity);
+
+                    // Mostrar informações da janela
+                    //wf.MessageBox.Show($"Janela: {title}\nPosição: ({windowRect.Left}, {windowRect.Top})\n" +
+                    //                 $"Dimensões: {width}x{height}", "Informações da Janela");
+                }
+                else
+                {
+                    wf.MessageBox.Show("Não foi possível capturar o retângulo da janela.", "Erro");
+                }
+            }
+            else
+            {
+                wf.MessageBox.Show("Nenhuma janela encontrada sob o cursor.", "Erro");
+            }
+            return windowRect;
+        }
+
         public static void BuscarAninhados(Autodesk.Revit.DB.ElementId eleId, Autodesk.Revit.DB.Document uiDoc, ref List<Autodesk.Revit.DB.ElementId> listaEle)
         {
             var ele = uiDoc.GetElement(eleId);

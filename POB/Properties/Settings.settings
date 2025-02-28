@@ -134,5 +134,8 @@
     <Setting Name="tocDensidadeChapa" Type="System.String" Scope="User">
       <Value Profile="(Default)">Densidade de área</Value>
     </Setting>
+    <Setting Name="handleAta" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0004121A</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

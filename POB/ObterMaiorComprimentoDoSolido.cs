@@ -41,18 +41,23 @@ namespace POB
             Selection sel = uiApp.ActiveUIDocument.Selection;
             //TransactionGroup t = new TransactionGroup(uiDoc);
 
-            ViewSchedule _viewSchedule = uiDoc.ActiveView as ViewSchedule;
-            _viewSchedule.GetCellText(Autodesk.Revit.DB.SectionType.Body, 1, 1);
-            TableSectionData sectionData = _viewSchedule.GetTableData().GetSectionData(Autodesk.Revit.DB.SectionType.Body);
+            FilteredElementCollector col = new FilteredElementCollector(uiApp.ActiveUIDocument.Document).OfClass(typeof(ViewSchedule));
 
 
-            var numberOfRows = sectionData.NumberOfRows;
-            var numberOfColumns = sectionData.NumberOfColumns;
-            var firstRowNumber = sectionData.FirstRowNumber;
+            foreach (ViewSchedule _viewSchedule in col)
+            {
+                if (_viewSchedule.LookupParameter("Extrair da vista").AsValueString() == "Sim")
+                {
+                    _viewSchedule.GetCellText(Autodesk.Revit.DB.SectionType.Body, 1, 1);
+                    TableSectionData sectionData = _viewSchedule.GetTableData().GetSectionData(Autodesk.Revit.DB.SectionType.Body);
 
+
+                    var numberOfRows = sectionData.NumberOfRows;
+                    var numberOfColumns = sectionData.NumberOfColumns;
+                    var firstRowNumber = sectionData.FirstRowNumber;
+                }
+            }
             return Result.Succeeded;
-
-
 
             List<ObjetoDeTranferencia.DadosExcel> dadosExcel = new List<ObjetoDeTranferencia.DadosExcel>();
             wf.OpenFileDialog openFileDialog = new wf.OpenFileDialog();
