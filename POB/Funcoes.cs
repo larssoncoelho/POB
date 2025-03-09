@@ -2350,7 +2350,7 @@ namespace POB
         {
             Autodesk.Revit.DB.FamilyInstance aFamilyInst;
             var qtde = element.LookupParameter("Qtde");
-            var unidade = element.LookupParameter("Unidade");
+            var unidade = element.LookupParameter("Unidade do insumo");
 
             if (element.Category.Name == "Conexões de tubo")
             {

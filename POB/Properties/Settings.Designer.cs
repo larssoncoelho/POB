@@ -12,7 +12,7 @@ namespace POB.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -217,7 +217,7 @@ namespace POB.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("L7Unidade")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Unidade do insumo")]
         public string L7Unidade {
             get {
                 return ((string)(this["L7Unidade"]));
@@ -229,7 +229,7 @@ namespace POB.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("L7Comprimento")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comprimento do insumo")]
         public string L7Comprimento {
             get {
                 return ((string)(this["L7Comprimento"]));

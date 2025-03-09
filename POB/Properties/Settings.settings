@@ -51,10 +51,10 @@
       <Value Profile="(Default)">Pilares estruturais</Value>
     </Setting>
     <Setting Name="L7Unidade" Type="System.String" Scope="User">
-      <Value Profile="(Default)">L7Unidade</Value>
+      <Value Profile="(Default)">Unidade do insumo</Value>
     </Setting>
     <Setting Name="L7Comprimento" Type="System.String" Scope="User">
-      <Value Profile="(Default)">L7Comprimento</Value>
+      <Value Profile="(Default)">Comprimento do insumo</Value>
     </Setting>
     <Setting Name="Material" Type="System.String" Scope="User">
       <Value Profile="(Default)">Material</Value>

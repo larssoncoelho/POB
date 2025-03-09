@@ -631,7 +631,7 @@ namespace POB
             string textoDiametro = "";
             string textoAngulo = "";
             unidServico = "Unid";
-
+           
             var parNomeParametro = ele.LookupParameter("ParametroUilizarNome");
             if (parNomeParametro != null)
                 if (parNomeParametro.HasValue)
@@ -655,20 +655,38 @@ namespace POB
                 if (parMolDescricao.HasValue)
                     if (!string.IsNullOrEmpty(parMolDescricao.AsString()))
                         return parMolDescricao.AsString();
-            var parTigreDescricao = ele.LookupParameter("Tigre: Descrição");
+            /*var parTigreDescricao = ele.LookupParameter("Tigre: Descrição");
             if (parTigreDescricao != null)
                 if (parTigreDescricao.HasValue)
                     if (!string.IsNullOrEmpty(parTigreDescricao.AsString()))
                         return parTigreDescricao.AsString();
+            */
+            //nomeServico = (ele as FamilyInstance).Symbol.LookupParameter("Modelo").AsString();
+            nomeServico = ele.Name;// (ele as FamilyInstance).naSymbol.LookupParameter("Modelo").AsString();
+            var tabelaConversao = new List<(double Menor, double Maior, string Texto)>
+            {
+                (49, 54, "2\""),
+                (55, 62, "2 1/4\""),
+                (62.05, 68, "2 1/2\""),
+                (69, 78, "3\""),
+                (79, 105, "4\"")
+            };
+            var tamanhos = ele.LookupParameter("Tamanho").AsString();
+            var lista = tamanhos.Split('-').ToList();
+            var listaDouble = lista.Select(item => item.Replace(" mmø", "")) // Remove "mm"
+                               .Distinct() // Remove duplicatas
+                               .Select(double.Parse) // Converte para double
+                               .OrderByDescending(x => x) // Ordena os valores
+                               .ToList();
+            var listaPolegadas = listaDouble.Select(valor =>tabelaConversao.FirstOrDefault(intervalo => valor >= intervalo.Menor && 
+                                                                                                                valor <= intervalo.Maior).Texto ?? "todo").ToList();
 
-            nomeServico = (ele as FamilyInstance).Symbol.LookupParameter("Modelo").AsString();
-
-
-
-            diametro = GetNominalDiameter(ele);
+            string diametros = string.Join(" X ", listaPolegadas.Select(y => y.ToString()));
+            
+            /*diametro = GetNominalDiameter(ele);
             diametro1 = GetNominalDiameter1(ele);
             valorDiametro = GetNominalDiameterValor(ele);
-            valorDiametro1 = GetNominalDiameterValor1(ele);
+            valorDiametro1 = GetNominalDiameterValor1(ele);*/
             angulo = GetAngulo(ele);
 
             valorAngulo = GetAnguloValue(ele);
@@ -689,7 +707,7 @@ namespace POB
             textoAngulo = Math.Round(valorAnguloGuardado, 0).ToString() + "º";
 
 
-            if (diametro != null)
+            /*if (diametro != null)
             {
                 textoDiametro = diametro;
             }
@@ -703,7 +721,7 @@ namespace POB
                 {
                     textoDiametro = diametro + " X " + diametro1;
                 }
-            }
+            }*/
 
             nomeServico = nomeServico + " - " + textoDiametro;
             if (GetAnguloValue(ele) != 0)
